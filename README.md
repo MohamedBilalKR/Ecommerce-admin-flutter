@@ -1,6 +1,6 @@
 # e_commerce_admin
 
-A new Flutter project.
+A Ecommerce Admin Project
 
 ## Getting Started
 
