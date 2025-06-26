@@ -28,7 +28,9 @@ class EditCategoryController extends GetxController {
     imageURL.value = category.image;
     banner.value = category.banner!;
     if (category.parentId.isNotEmpty) {
-      selectedParent.value = CategoryController.instance.allItems.where((c) => c.id == category.parentId).single;
+      selectedParent.value = CategoryController.instance.allItems
+          .where((c) => c.id == category.parentId)
+          .single;
     }
   }
 
@@ -87,7 +89,7 @@ class EditCategoryController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       imageURL.value = selectedImage.url;
@@ -101,7 +103,7 @@ class EditCategoryController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       banner.value = selectedImage.url;

@@ -42,7 +42,7 @@ class CreateBannerController extends GetxController {
         id: '',
         active: isActive.value,
         imageUrl: imageURL.value,
-      ); 
+      );
 
       newRecord.id = await BannerRepository.instance.createBanner(newRecord);
 
@@ -56,8 +56,8 @@ class CreateBannerController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       //Success Message
-      TLoaders.successSnackBar(title: 'Congratulations', message: 'New Banner has been added.');
-
+      TLoaders.successSnackBar(
+          title: 'Congratulations', message: 'New Banner has been added.');
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -71,13 +71,13 @@ class CreateBannerController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       imageURL.value = selectedImage.url;
     }
   }
-  
+
   //Reset Fields
   void resetFields() {
     loading(false);

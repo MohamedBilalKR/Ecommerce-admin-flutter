@@ -48,9 +48,10 @@ class CreateCategoryController extends GetxController {
         createdAt: DateTime.now(),
         isFeatured: isFeatured.value,
         parentId: selectedParent.value.id,
-      ); 
+      );
 
-      newRecord.id = await CategoryRepository.instance.createCategory(newRecord);
+      newRecord.id =
+          await CategoryRepository.instance.createCategory(newRecord);
 
       //Update All Data List
       CategoryController.instance.addItemToLists(newRecord);
@@ -58,13 +59,12 @@ class CreateCategoryController extends GetxController {
       //Reset Form
       resetFields();
 
-
       //Remove Loader
       TFullScreenLoader.stopLoading();
 
       //Success Message
-      TLoaders.successSnackBar(title: 'Congratulations', message: 'New Category has been added.');
-
+      TLoaders.successSnackBar(
+          title: 'Congratulations', message: 'New Category has been added.');
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -78,7 +78,7 @@ class CreateCategoryController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       imageURL.value = selectedImage.url;
@@ -92,13 +92,13 @@ class CreateCategoryController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       banner.value = selectedImage.url;
     }
   }
-  
+
   //Reset Fields
   void resetFields() {
     selectedParent(CategoryModel.empty());

@@ -45,8 +45,8 @@ class EditBannerController extends GetxController {
       }
 
       //Is data Updated
-      if (banner.imageUrl != imageURL.value || banner.active != isActive.value) {
-
+      if (banner.imageUrl != imageURL.value ||
+          banner.active != isActive.value) {
         //Map Data
         banner.imageUrl = imageURL.value;
         banner.active = isActive.value;
@@ -61,8 +61,8 @@ class EditBannerController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       //Success Message
-      TLoaders.successSnackBar(title: 'Congratulations', message: 'Your Banner has been Updated.');
-
+      TLoaders.successSnackBar(
+          title: 'Congratulations', message: 'Your Banner has been Updated.');
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -76,7 +76,7 @@ class EditBannerController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       imageURL.value = selectedImage.url;

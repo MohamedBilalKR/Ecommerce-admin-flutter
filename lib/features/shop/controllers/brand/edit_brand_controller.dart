@@ -48,7 +48,7 @@ class EditBrandController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       imageURL.value = selectedImage.url;

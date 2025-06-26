@@ -16,7 +16,7 @@ class ProductImagesController extends GetxController {
     List<ImageModel>? selectedImages =
         await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
 
       selectedThumbnailImageUrl.value = selectedImage.url;
@@ -37,9 +37,10 @@ class ProductImagesController extends GetxController {
   //Select variation Images
   void selectVariationImage(ProductVariationModel variation) async {
     final controller = Get.put(MediaController());
-    List<ImageModel>? selectedImages = await controller.selectedImagesFromMedia();
+    List<ImageModel>? selectedImages =
+        await controller.selectedImagesFromMedia();
 
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    if (selectedImages!.isNotEmpty) {
       ImageModel selectedImage = selectedImages.first;
       variation.image.value = selectedImage.url;
     }

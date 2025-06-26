@@ -9,7 +9,7 @@ import '../../../data/repositories/setting/settings_repository.dart';
 import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/popups/full_screen_loader.dart';
 
-class SettingsController extends GetxController{
+class SettingsController extends GetxController {
   static SettingsController get instance => Get.find();
 
   RxBool loading = false.obs;
@@ -28,7 +28,7 @@ class SettingsController extends GetxController{
     fetchSettingDetails();
     super.onInit();
   }
-  
+
   Future<SettingsModel> fetchSettingDetails() async {
     try {
       loading.value = true;
@@ -38,15 +38,17 @@ class SettingsController extends GetxController{
       appNameController.text = settings.appName;
       taxController.text = settings.taxRate.toString();
       shippingController.text = settings.shippingCost.toString();
-      freeShippingController.text = settings.freeShippingThreshold == null ? '' : settings.freeShippingThreshold.toString();
+      freeShippingController.text = settings.freeShippingThreshold == null
+          ? ''
+          : settings.freeShippingThreshold.toString();
 
       loading.value = false;
 
       return settings;
-
     } catch (e) {
-     TLoaders.errorSnackBar(title: 'Somethinh went wrong', message: e.toString());
-     return SettingsModel();
+      TLoaders.errorSnackBar(
+          title: 'Somethinh went wrong', message: e.toString());
+      return SettingsModel();
     }
   }
 
@@ -54,22 +56,25 @@ class SettingsController extends GetxController{
   void updateAppLogo() async {
     try {
       loading.value = true;
-       final controller = Get.put(MediaController());
-       List<ImageModel>? selectedImages = await controller.selectedImagesFromMedia();
+      final controller = Get.put(MediaController());
+      List<ImageModel>? selectedImages =
+          await controller.selectedImagesFromMedia();
 
-       if (selectedImages != null && selectedImages.isNotEmpty) {
+      if (selectedImages!.isNotEmpty) {
         ImageModel selectedImage = selectedImages.first;
 
-        await settingsRepository.updateSingleField({'AppLogo': selectedImage.url});
+        await settingsRepository
+            .updateSingleField({'AppLogo': selectedImage.url});
 
         settings.value.appLogo = selectedImage.url;
         settings.refresh();
 
-        TLoaders.successSnackBar(title: 'Congratualtions', message: 'App Logo has been updated.');
-       }
-       loading.value = false;
+        TLoaders.successSnackBar(
+            title: 'Congratualtions', message: 'App Logo has been updated.');
+      }
+      loading.value = false;
     } catch (e) {
-      loading.value = false; 
+      loading.value = false;
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
@@ -92,19 +97,22 @@ class SettingsController extends GetxController{
       }
 
       settings.value.appName = appNameController.text.trim();
-      settings.value.taxRate = double.tryParse(taxController.text.trim()) ?? 0.0;
-      settings.value.shippingCost = double.tryParse(shippingController.text.trim()) ?? 0.0;
-      settings.value.freeShippingThreshold = double.tryParse(freeShippingController.text.trim()) ?? 0.0;
+      settings.value.taxRate =
+          double.tryParse(taxController.text.trim()) ?? 0.0;
+      settings.value.shippingCost =
+          double.tryParse(shippingController.text.trim()) ?? 0.0;
+      settings.value.freeShippingThreshold =
+          double.tryParse(freeShippingController.text.trim()) ?? 0.0;
 
       await settingsRepository.updateSettingDetails(settings.value);
       settings.refresh();
 
       loading.value = false;
-      TLoaders.successSnackBar(title: 'Congratualtions', message: 'App Settings has been updated.');
-
+      TLoaders.successSnackBar(
+          title: 'Congratualtions', message: 'App Settings has been updated.');
     } catch (e) {
-      loading.value = false; 
-      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString()); 
+      loading.value = false;
+      TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

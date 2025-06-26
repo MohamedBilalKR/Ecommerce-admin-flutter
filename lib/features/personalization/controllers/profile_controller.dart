@@ -52,18 +52,21 @@ class ProfileController extends GetxController {
     try {
       loading.value = true;
       final controller = Get.put(MediaController());
-      List<ImageModel>? selectedImages = await controller.selectedImagesFromMedia();
+      List<ImageModel>? selectedImages =
+          await controller.selectedImagesFromMedia();
 
-      if (selectedImages != null && selectedImages.isNotEmpty) {
+      if (selectedImages!.isNotEmpty) {
         ImageModel selectedImage = selectedImages.first;
 
-        await userRepository.updateSingleField({'ProfilePicture': selectedImage.url});
+        await userRepository
+            .updateSingleField({'ProfilePicture': selectedImage.url});
 
         user.value.profilePicture = selectedImage.url;
         user.refresh();
 
         TLoaders.successSnackBar(
-            title: 'Congratualtions', message: 'Your Profile Picture has been updated.');
+            title: 'Congratualtions',
+            message: 'Your Profile Picture has been updated.');
       }
       loading.value = false;
     } catch (e) {
@@ -89,10 +92,9 @@ class ProfileController extends GetxController {
         return;
       }
 
-    user.value.firstName = firstNameController.text.trim();
-    user.value.lastName = lastNameController.text.trim();
-    user.value.phoneNumber = phoneController.text.trim();
-      
+      user.value.firstName = firstNameController.text.trim();
+      user.value.lastName = lastNameController.text.trim();
+      user.value.phoneNumber = phoneController.text.trim();
 
       await userRepository.updateUserDetails(user.value);
       user.refresh();
